@@ -1,0 +1,95 @@
+################################################################################
+Purpose:
+
+  Gain more experience working with linked lists and pointers, using the STL and algorithm development.
+
+Problem Statement:
+
+  We would like to easily find "cluster" or "peer" groups for people.
+  For this assignment, we will talk about people that have a "similar"
+  grade average to the person that we are finding the group for.
+
+      Students < 1000 ++ avg Grade
+      Sort Students based on that avg to be printed out in groups of size 16 greatest to least
+
+
+  Since we sometimes have a loose definition of a peer group and sometimes
+  it is stronger, we will allow the size of a peer group  to vary.
+  Most people do not have the same grade average exactly.  We will allow the
+  user to decide how big of a group is desired.
+
+Details:
+
+  You will read the master list from the file /home/win.thackerw/271/peer/master.dat.
+  In this file will be a person's last name (at most 20 characters) and their
+  grade average (a decimal number) separated by white space.
+  You will insert these values into a doubly linked list in grade average order.
+
+    Sort given student - grade file by highest -> lowest grade structs
+
+  Next you will read from /home/win.thackerw/271/peer/groups.dat (repeatedly until end of file)
+  a name and a group size (an integer. You will then find this person on your
+  master list and print out the "group size" number of people that have the closest
+  grades to his/her grade. This will require you going back and forth in the linked
+  list since "closest" refers to smallest difference in either a positive or negative
+  sense. Also, the group may not be symmetrical.  For a group of size 10, there
+  may be 3 students with higher grades than the one we are considering and 7 with
+  lower grades and having these be the 10 closest grades.  You need to use the
+  Double Linked List class from the STL.
+
+      Take a given name
+      Find it in the ordered list
+      Store the found name, and the [group size] students whose grades are 'closest'
+          If found name is [near] first, [almost] all others will be below in grade
+          If found name is [near] last , [almost] all others will be above in grade
+          If found name is in the middle, compare above and below which is closer to found name's grades
+      Print out the group size and all students in the group
+
+What to turn in:
+
+  You are to email me your program with the code as an attachment.  You may tar it if you wish.  Also, turn in a printout of your program.
+
+################################################################################
+
+
+
+Issues and suggestions about Project 1
+
+1.    Write just the code for main to create the master linked list and then print it out.
+If you write the entire project and you have issues with getting this part correct,
+then you will need to rewrite a major part of your project.  BUILD INCREMENTALLY.
+
+2.    When accessing a member of a class or struct pointed to by an iterator,
+you may try something like *myIterator.someMethod() or *myIterator.someData .
+Here is the issue: there are 2 operations in each of those examples, the
+dereference operation (*) and the dot (.) operation to access the member.
+These are both operators.  Operators have precedence, so the question is which
+operation has precedence, dot (.) or dereference (*).  As it turns out, dot (.)
+has precedence over dereference (*).  So the order of evaluation will be as if
+you expressed the statement as
+  *(myIterator.someMethod())
+But this is typically not the order you want to use.
+You want to get the item the iterator is pointing to first, then access the method or data within the item.
+So to override the precedence, you will need to do something like:
+  (*myIterator).someMethod()  or (*myIterator).someData
+
+3.    Thinking about your function to create and return a list of "close" people.
+Inside the function, you should create a list to build and return.  If you were
+to do this just by declaring a list inside your function, then when you tried to
+return it, you would not be able to, because the list is "destroyed" at the end
+of the function.  All variables declared locally in a function are destroyed at
+the end of a function by calling that object's destructor.  For a list, this
+destructor frees up all the memory used by the list nodes.  So when back in the
+main and you try to go through the linked list, you will be referencing memory
+that has been free-ed up.  If you do nothing between the return and accessing
+(such as for printing) these free-ed nodes, then things may look like they have
+worked (you are still going to the "bad" memory locations, but since they have
+not been "reused" yet, the old "good" values are still there.  But, even if this
+program "works" from your test cases, you should not do it this way.  If you
+decide to do other things with the returned list later in the program, then there
+will be problems if the system re-uses that memory.
+    So, instead of declaring a local list, you should call new to create a new LIST (not a new node).
+    Then you will be working with a pointer to a list (that will be destroyed, but the list will not be destroyed).
+    So you will need to work with a dereferenced list pointer rather than the regular list variable.
+
+################################################################################

@@ -1,0 +1,48 @@
+#relevent includes
+
+int main()
+{
+  Declare Struct 'Student'
+    Will hold the name and grade of the students from the list
+
+  Load master.dat (list of names and grades)
+    ERROR CHECK:
+      check if file exists
+      check if file is empty
+
+  Read-in values from master.dat
+    1) Store name into new struct (student)
+    2) Store grade into student
+    3) Store student into a LINKED LIST in order (determined by grade; least to greatest) (SList)
+
+    ERROR CHECK:
+      check if file FAILS to follow convention (name grade name grade ......etc)
+      check if file is EMPTY - end read in when EMPTY
+
+  Close master.dat
+
+  Load groups.dat (list of names and group sizes)
+    ERROR CHECK:
+      check if file exists
+      check if file is empty
+
+  Read-in values from groups.dat
+    1) Identify name
+    2) Search for name in SList
+      ERROR CHECK:
+        check if name exists
+    3) Having found name, copy name into a LINKED LIST (GList)
+    4) Compare names near found name, copy (group size - 1) names closest by number into GList
+
+    ERROR CHECK:
+      check if file FAILS to follow convention (name grade name grade ......etc)
+      check if file is EMPTY - end read in when EMPTY
+
+    5) Store completed group into a LINKED LIST (MList) for print out
+
+  Close group.dat
+
+  Print Out MList (All names in all indv GList)
+
+  return
+}
